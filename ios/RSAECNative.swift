@@ -338,10 +338,10 @@ class RSAECNative: NSObject {
         // Closures
         let encryptor:SecKeyPerformBlock = { publicKey in
             if #available(iOS 10.0, *) {
-                let canEncrypt = SecKeyIsAlgorithmSupported(publicKey, .encrypt, .rsaEncryptionPKCS1)
+                let canEncrypt = SecKeyIsAlgorithmSupported(publicKey, .encrypt, .rsaEncryptionOAEPSHA1)
                 if(canEncrypt){
                     var error: Unmanaged<CFError>?
-                    cipherText = SecKeyCreateEncryptedData(publicKey, .rsaEncryptionPKCS1, data as CFData, &error) as Data?
+                    cipherText = SecKeyCreateEncryptedData(publicKey, .rsaEncryptionOAEPSHA1, data as CFData, &error) as Data?
                 }
             } else {
                 // Fallback on earlier versions
@@ -377,10 +377,10 @@ class RSAECNative: NSObject {
         var clearText: Data?
         let decryptor: SecKeyPerformBlock = {privateKey in
             if #available(iOS 10.0, *) {
-                let canEncrypt = SecKeyIsAlgorithmSupported(privateKey, .decrypt, .rsaEncryptionPKCS1)
+                let canEncrypt = SecKeyIsAlgorithmSupported(privateKey, .decrypt, .rsaEncryptionOAEPSHA1)
                 if(canEncrypt){
                     var error: Unmanaged<CFError>?
-                    clearText = SecKeyCreateDecryptedData(privateKey, .rsaEncryptionPKCS1, data as CFData, &error) as Data?
+                    clearText = SecKeyCreateDecryptedData(privateKey, .rsaEncryptionOAEPSHA1, data as CFData, &error) as Data?
                 }
                 
             } else {

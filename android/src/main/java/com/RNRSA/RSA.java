@@ -129,7 +129,7 @@ public class RSA {
     // This function will be called by encrypt and encrypt64
     private byte[] encrypt(byte[] data) throws NoSuchAlgorithmException, InvalidKeySpecException, IllegalBlockSizeException, BadPaddingException, NoSuchPaddingException, InvalidKeyException {
         String encodedMessage = null;
-        final Cipher cipher = Cipher.getInstance("RSA/NONE/PKCS1Padding");
+        final Cipher cipher = Cipher.getInstance("RSA/NONE/OAEPWithSHA-1AndMGF1Padding");
         cipher.init(Cipher.ENCRYPT_MODE, this.publicKey);
         byte[] cipherBytes = cipher.doFinal(data);
         return cipherBytes;
@@ -151,7 +151,7 @@ public class RSA {
 
     private byte[] decrypt(byte[] cipherBytes) throws NoSuchAlgorithmException, InvalidKeySpecException, IllegalBlockSizeException, BadPaddingException, NoSuchPaddingException, InvalidKeyException {
         String message = null;
-        final Cipher cipher = Cipher.getInstance("RSA/NONE/PKCS1Padding");
+        final Cipher cipher = Cipher.getInstance("RSA/NONE/OAEPWithSHA-1AndMGF1Padding");
         cipher.init(Cipher.DECRYPT_MODE, this.privateKey);
         byte[] data = cipher.doFinal(cipherBytes);
         return data;
